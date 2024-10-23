@@ -5,15 +5,35 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:text="GO TO MAIN PAGE"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:text="GO TO RESULT PAGE"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="13dp"
+            android:text="GO TO NUMBER PAGE" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
