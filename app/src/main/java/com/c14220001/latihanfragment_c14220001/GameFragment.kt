@@ -61,7 +61,8 @@ class GameFragment : Fragment() {
 
         // Acak susunan angka di tombol
         buttons.forEachIndexed { index, button ->
-            button.text = numbers[index].toString()
+            button.tag = numbers[index].toString()  // Store the number in tag
+            button.text = ""  // Hide the number initially
             button.setOnClickListener { onNumberButtonClick(button) }
             button.isEnabled = true
             button.visibility = View.VISIBLE
@@ -74,7 +75,9 @@ class GameFragment : Fragment() {
     }
 
     private fun onNumberButtonClick(button: Button) {
-        val selectedValue = button.text.toString()
+        // Reveal the number when clicked
+        val selectedValue = button.tag.toString()
+        button.text = selectedValue  // Show the number on click
 
         if (lastSelectedValue == null) {
             // Pilih angka pertama
@@ -92,6 +95,7 @@ class GameFragment : Fragment() {
             } else {
                 // Jika angka beda, skor -5
                 score -= 5
+                lastButton?.text = ""  // Hide the number again if it doesn’t match
                 lastButton?.isEnabled = true
             }
 
@@ -106,6 +110,7 @@ class GameFragment : Fragment() {
             navigateToResult()
         }
     }
+
 
     private fun navigateToResult() {
         // Navigasi ke fragment hasil dengan skor akhir
