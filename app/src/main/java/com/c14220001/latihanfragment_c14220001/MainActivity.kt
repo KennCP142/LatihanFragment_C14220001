@@ -1,20 +1,55 @@
 package com.c14220001.latihanfragment_c14220001
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 class MainActivity : AppCompatActivity() {
+
+    private var finalScore: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val btnGame = findViewById<Button>(R.id.btnGame)
+        val btnScore = findViewById<Button>(R.id.btnScore)
+        val btnSettings = findViewById<Button>(R.id.btnSettings)
+
+        btnGame.setOnClickListener {
+            resetGameAndReturnToGameFragment() // Reset game saat tombol Game ditekan
         }
+
+        btnSettings.setOnClickListener {
+            loadFragment(SettingsFragment())
+        }
+
+        btnScore.setOnClickListener {
+            val scoreFragment = ScoreFragment()
+            val bundle = Bundle()
+            bundle.putInt("finalScore", finalScore)
+            scoreFragment.arguments = bundle
+            loadFragment(scoreFragment)
+        }
+    }
+
+    // Fungsi untuk mereset game dan kembali ke GameFragment
+    fun resetGameAndReturnToGameFragment() {
+        finalScore = 0 // Reset skor
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE) // Clear back stack
+        loadFragment(GameFragment()) // Memuat ulang GameFragment
+    }
+
+    fun updateFinalScore(score: Int) {
+        finalScore = score
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
